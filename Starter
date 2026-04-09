@@ -1,0 +1,5 @@
+Til på skolen - Guiden
+npx expo start
+
+Til der hjemme
+npx expo start --tunnel
