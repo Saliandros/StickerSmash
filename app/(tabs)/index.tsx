@@ -52,6 +52,7 @@ export default function Index() {
 
   const onReset = () => {
     setShowAppOptions(false);
+    setPickedEmoji(undefined);
   };
 
   const onAddSticker = () => {
