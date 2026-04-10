@@ -1,18 +1,18 @@
+import domtoimage from "dom-to-image";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import { useEffect, useRef, useState } from "react";
-import { ImageSourcePropType, View, StyleSheet, Platform } from "react-native";
+import { ImageSourcePropType, Platform, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { captureRef } from "react-native-view-shot";
-import domtoimage from "dom-to-image";
 
 import Button from "@/components/Button";
-import ImageViewer from "@/components/ImageViewer";
-import IconButton from "@/components/IconButton";
 import CircleButton from "@/components/CircleButton";
-import EmojiPicker from "@/components/EmojiPicker";
 import EmojiList from "@/components/EmojiList";
+import EmojiPicker from "@/components/EmojiPicker";
 import EmojiSticker from "@/components/EmojiSticker";
+import IconButton from "@/components/IconButton";
+import ImageViewer from "@/components/ImageViewer";
 
 const PlaceholderImage = require("@/assets/images/background-image.png");
 
@@ -80,7 +80,13 @@ export default function Index() {
       }
     } else {
       try {
-        const dataUrl = await domtoimage.toJpeg(imageRef.current, {
+        // Ensure imageRef.current is a valid DOM node
+        const node = imageRef.current as unknown as Node | null;
+        if (!node) {
+          alert("Could not capture image: node not found.");
+          return;
+        }
+        const dataUrl = await domtoimage.toJpeg(node, {
           quality: 0.95,
           width: 320,
           height: 440,
